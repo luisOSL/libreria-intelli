@@ -15,10 +15,6 @@ class Author extends Model
         parent::boot();
 
         static::deleting(function ($author) {
-            // This ensures that when an author is deleted, 
-            // we could perform additional logic if needed.
-            // The database handles the physical delete of books,
-            // but the author's record is gone anyway, so the count doesn't matter.
         });
     }
     public function books()

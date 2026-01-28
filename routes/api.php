@@ -30,8 +30,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::post('logout', 'AuthController@logout');
 
-    // Route::post('logout', function() {
-    //     auth('api')->logout();
-    //     return response()->json(['message' => 'Logged out']);
-    // });
+   
 });

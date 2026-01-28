@@ -11,6 +11,9 @@
                     <input type="password" id="password" class="form-control mb-3" placeholder="Password" required>
                     <button type="submit" class="btn btn-primary btn-block">Enter</button>
                 </form>
+                <div class="mt-3 text-center">
+                    <small>¿No tiene una cuenta? <a href="{{route('register')}}">Regístrese aquí</a></small>
+                </div>
             </div>
         </div>
     </div>
