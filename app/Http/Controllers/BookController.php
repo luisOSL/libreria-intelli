@@ -25,6 +25,11 @@ class BookController extends Controller
         return response()->json($book->load('author'), 201);
     }
 
+     public function show($id)
+    {
+        return Book::findOrFail($id);
+    }
+
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);

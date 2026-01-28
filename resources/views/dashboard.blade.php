@@ -50,8 +50,8 @@
         <div class="card shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 font-weight-bold">Books Inventory</h5>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bookModal">
-                    <i class="fas fa-plus-circle"></i> Add New Book
+                <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#bookModal">
+                    <i class="fas fa-plus"></i>
                 </button>
             </div>
             <div class="card-body p-0">
