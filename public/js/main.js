@@ -4,7 +4,7 @@ $.ajaxSetup({
         'Accept': 'application/json'
     }
 });
-$(document).ready(function () {
+$(function () {
     // Show logout button only if logged in
     if (localStorage.getItem('jwt_token')) {
         $('#sidebar').show();
@@ -18,10 +18,10 @@ $(document).ready(function () {
             url: '/api/logout',
             type: 'POST',
             success: function (response) {
-                alert('Logged out successfully');
+                alert('Ha salido del sistema');
             },
             error: function () {
-                console.log('Token might already be expired');
+                console.log('El Token ha expirado');
             },
             complete: function () {
                 // Always clear local storage and redirect

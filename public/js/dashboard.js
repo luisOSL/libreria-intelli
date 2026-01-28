@@ -1,24 +1,23 @@
 $(function () {
-    loadAuthors();
-    loadBooks();
+    cargarAutores();
+    cargarLibros();
 });
 
 
 
-function loadAuthors() {
+function cargarAutores() {
     $.get('/api/authors', function (data) {
         let list = '';
-        let options = '<option value="">-- Select an Author --</option>';
+        let options = '<option value="">-- Seleccione --</option>';
 
         data.forEach(a => {
-            // For the sidebar list
             list += `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     ${a.name}
                     <div>
-                        <span class="badge badge-primary badge-pill mr-2">${a.books_count} books</span>
-                        <button class="btn btn-danger btn-sm" onclick="deleteAuthor(${a.id})"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
-                        <button class="btn btn-primary btn-sm" onclick="updateAuthor(${a.id})"><i class="fas fa-edit mr-2"></i>Edit</button>
+                        <span class="badge badge-primary badge-pill mr-2">${a.books_count} <span class="d-none d-md-inline">libros</span></span>
+                        <button class="btn btn-danger btn-sm" onclick="borrarAutor(${a.id})"><i class="fas fa-trash-alt"></i><span class="d-none d-lg-inline ml-2">Eliminar</span></button>
+                        <button class="btn btn-primary btn-sm" onclick="actualizarAutor(${a.id})"><i class="fas fa-edit"></i><span class="d-none d-lg-inline ml-2">Editar</span></button>
                     </div>
                 </li>`;
             // For the "Add Book" dropdown
@@ -31,7 +30,7 @@ function loadAuthors() {
     });
 }
 
-function loadBooks() {
+function cargarLibros() {
     $.get('/api/books', function (data) {
         let rows = '';
         data.forEach(b => {
@@ -39,33 +38,33 @@ function loadBooks() {
                     <td>${b.title}</td>
                     <td>${b.author ? b.author.name : 'Unknown'}</td>
                     <td class="text-right">
-                    <button class="btn btn-danger btn-sm" onclick="deleteBook(${b.id})"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
-                    <button class="btn btn-primary btn-sm" onclick="updateBook(${b.id})"><i class="fas fa-edit mr-2"></i>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="borrarLibro(${b.id})"><i class="fas fa-trash-alt"></i><span class="d-none d-lg-inline ml-2">Eliminar</span></button>
+                    <button class="btn btn-primary btn-sm" onclick="actualizarLibro(${b.id})"><i class="fas fa-edit"></i><span class="d-none d-lg-inline ml-2">Editar</span></button>
                     </td>
                 </tr>`;
         });
         $('#bookTableBody').html(rows);
         $('#totalBooksCount').text(data.length);
-        loadAuthors();
+        cargarAutores();
     });
 }
 
-function saveAuthor() {
+function guardarAutor() {
     const name = $('#newAuthorName').val();
     $.post('/api/authors', {
         name: name
     }, function (data) {
         $('#authorModal').modal('hide');
         $('#author_name').val('');
-        loadAuthors();
+        cargarAutores();
     });
 }
-function saveBook() {
+function guardarLibro() {
     const title = $('#book_title').val();
     const author_id = $('#author_select').val();
 
     if (!title || !author_id) {
-        alert("Please fill in all fields");
+        alert("Debe llenar todos los campos");
         return;
     }
 
@@ -79,7 +78,7 @@ function saveBook() {
         success: function (response) {
             $('#bookModal').modal('hide'); // Close modal
             $('#book_title').val(''); // Clear input
-            loadBooks(); // Refresh the table
+            cargarLibros(); // Refresh the table
         },
         error: function (xhr) {
             alert("Error saving book: " + xhr.responseJSON.message);
@@ -87,36 +86,36 @@ function saveBook() {
     });
 }
 
-function deleteBook(id) {
+function borrarLibro(id) {
     if (confirm('Delete this book?')) {
         $.ajax({
             url: `/api/books/${id}`,
             type: 'DELETE',
             success: function () {
-                loadBooks();
+                cargarLibros();
             }
         });
     }
 }
-function deleteAuthor(id) {
-    if (confirm('Delete this Author?')) {
+function borrarAutor(id) {
+    if (confirm('¿Desea eliminar este autor?')) {
         $.ajax({
             url: `/api/authors/${id}`,
             type: 'DELETE',
             success: function () {
-                loadAuthors();
-                loadBooks();
+                cargarAutores();
+                cargarLibros();
             }
         });
     }
 }
 
-function updateAuthor(id) {
+function actualizarAutor(id) {
     // Fetch the specific author data first
     $.get(`/api/authors/${id}`, function (author) {
         // Change Modal UI
         $('#authorModalLabel').text('Edit Author');
-        $('#saveAuthorBtn').text('Update Author').removeClass('btn-primary').addClass('btn-warning');
+        $('#guardarAutorBtn').text('Update Author').removeClass('btn-primary').addClass('btn-warning');
 
         // Fill the fields
         $('#edit_author_id').val(author.id);
@@ -129,14 +128,14 @@ function updateAuthor(id) {
 
 // 2. Logic to reset modal when opening for "New Author"
 $('[data-target="#authorModal"]').on('click', function () {
-    $('#authorModalLabel').text('Add New Author');
-    $('#saveAuthorBtn').text('Save Author').removeClass('btn-warning').addClass('btn-primary');
+    $('#authorModalLabel').text('Agergar Autor');
+    $('#guardarAutorBtn').text('Guardar').removeClass('btn-warning').addClass('btn-primary');
     $('#edit_author_id').val(''); // Clear ID
     $('#newAuthorName').val('');  // Clear Input
 });
 
 // 3. The unified Submit Handler
-function handleAuthorSubmit() {
+function autorSubmit() {
     const id = $('#edit_author_id').val();
     const name = $('#newAuthorName').val();
 
@@ -150,8 +149,8 @@ function handleAuthorSubmit() {
         data: { name: name },
         success: function (response) {
             $('#authorModal').modal('hide');
-            loadAuthors(); // Refresh lists and counts
-            alert(isEdit ? 'Author updated!' : 'Author created!');
+            cargarAutores(); // Refresh lists and counts
+            alert(isEdit ? 'Autor actualizado!' : 'Autor creado!');
         },
         error: function (xhr) {
             alert('Error: ' + xhr.responseJSON.message);
@@ -160,11 +159,11 @@ function handleAuthorSubmit() {
 }
 
 // 1. Function to prepare the modal for editing
-function updateBook(id) {
+function actualizarLibro(id) {
     $.get(`/api/books/${id}`, function (book) {
         // Change Modal UI for Update mode
-        $('#bookModalLabel').text('Edit Book Details');
-        $('#saveBookBtn').text('Update Book').removeClass('btn-success').addClass('btn-info');
+        $('#bookModalLabel').text('Detalles del Libro');
+        $('#guardarLibroBtn').text('Update Book').removeClass('btn-success').addClass('btn-info');
 
         // Fill the fields
         $('#edit_book_id').val(book.id);
@@ -178,15 +177,15 @@ function updateBook(id) {
 
 // 2. Logic to reset modal when clicking "Add New Book" button
 $('[data-target="#bookModal"]').on('click', function () {
-    $('#bookModalLabel').text('Add New Book');
-    $('#saveBookBtn').text('Register Book').removeClass('btn-info').addClass('btn-success');
+    $('#bookModalLabel').text('Agregar Libro');
+    $('#guardarLibroBtn').text('Guardar').removeClass('btn-info').addClass('btn-success');
     $('#edit_book_id').val('');
     $('#book_title').val('');
     $('#author_select').val('');
 });
 
 // 3. Unified Submit Handler for Books
-function handleBookSubmit() {
+function libroSubmit() {
     const id = $('#edit_book_id').val();
     const payload = {
         title: $('#book_title').val(),
@@ -203,9 +202,9 @@ function handleBookSubmit() {
         data: payload,
         success: function (response) {
             $('#bookModal').modal('hide');
-            loadBooks(); // Refresh table and count
-            loadAuthors(); // Refresh author book counts
-            alert(isEdit ? 'Book updated!' : 'Book added to library!');
+            cargarLibros(); // Refresh table and count
+            cargarAutores(); // Refresh author book counts
+            alert(isEdit ? 'Libro actualizado!' : 'Libro creado!');
         },
         error: function (xhr) {
             alert('Error: ' + xhr.responseJSON.message);

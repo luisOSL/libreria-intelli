@@ -5,35 +5,35 @@
     <div class="col-md-5">
         <div class="card">
             <div class="card-header text-center">
-                <h4>Create Account</h4>
+                <h4>Crear Usuario</h4>
             </div>
             <div class="card-body">
                 <form id="registerForm">
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" id="reg_name" class="form-control" placeholder="Enter name" required>
+                        <input type="text" id="reg_name" class="form-control" placeholder="Nombre completo" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="reg_email" class="form-control" placeholder="Enter email" required>
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="reg_email" class="form-control" placeholder="Correo Electrónico" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="reg_password" class="form-control" placeholder="Min. 6 characters" required>
+                        <label>Contraseña</label>
+                        <input type="password" id="reg_password" class="form-control" placeholder="Min. 6 caracteres" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input type="password" id="reg_password_confirmation" class="form-control" placeholder="Repeat password" required>
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" id="reg_password_confirmation" class="form-control" placeholder="Repetir Contraseña" required>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-block">Register</button>
+                    <button type="submit" class="btn btn-success btn-block">Registrar</button>
                 </form>
                 
                 <div class="mt-3 text-center">
-                    <small>Already have an account? <a href="/login">Login here</a></small>
+                    <small>¿Ya tiene una cuenta? <a href="/login">Entre aquí</a></small>
                 </div>
             </div>
         </div>
@@ -46,9 +46,8 @@
     $('#registerForm').on('submit', function(e) {
         e.preventDefault();
 
-        // Basic check for password matching before sending to API
         if ($('#reg_password').val() !== $('#reg_password_confirmation').val()) {
-            alert('Passwords do not match!');
+            alert('Verifique su Contraseña!');
             return;
         }
 
@@ -64,13 +63,11 @@
             type: 'POST',
             data: payload,
             success: function(response) {
-                // The API returns the token on successful registration
                 localStorage.setItem('jwt_token', response.token);
-                alert('Account created successfully!');
+                alert('Su cuenta ha sido creada !');
                 window.location.href = '/dashboard';
             },
             error: function(xhr) {
-                // Show validation errors from Laravel
                 let errors = xhr.responseJSON;
                 let errorMsg = 'Error:\n';
                 $.each(errors, function(key, value) {
