@@ -29,6 +29,13 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="/api/export-library?token=" id="exportLink" class="btn btn-success shadow-sm">
+            <i class="fas fa-file-excel mr-2"></i> Exportar a Excel
+        </a>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-lg-4 col-md-12 pt-2">
@@ -41,7 +48,7 @@
             </div>
             <div class="card-body p-0">
                 <ul class="list-group list-group-flush" id="authorList">
-                    </ul>
+                </ul>
             </div>
         </div>
     </div>
@@ -65,7 +72,7 @@
                             </tr>
                         </thead>
                         <tbody id="bookTableBody">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -82,7 +89,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="edit_author_id">
-                
+
                 <div class="form-group">
                     <label class="small font-weight-bold">Nombre del Autor</label>
                     <input type="text" id="newAuthorName" class="form-control" placeholder="Nombre completo">
@@ -105,7 +112,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="edit_book_id">
-                
+
                 <form id="bookForm">
                     <div class="form-group">
                         <label class="small font-weight-bold">Título</label>

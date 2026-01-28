@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +23,3 @@ Route::get('register',  function () {
     return view('register');
 })->name('register');
 Route::view('/dashboard', 'dashboard');
-
-// Route::group(['middleware' => 'auth:api'], function () {
-//     Route::get('dashboard',  function () {
-//         return view('dashboard');
-//     });
-// });

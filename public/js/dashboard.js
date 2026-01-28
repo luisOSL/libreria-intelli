@@ -211,6 +211,10 @@ function libroSubmit() {
         }
     });
 }
+
+const token = localStorage.getItem('jwt_token');
+    $('#exportLink').attr('href', `/api/export-library?token=${token}`);
+    
 if (!localStorage.getItem('jwt_token')) {
     window.location.href = '/login';
 }
