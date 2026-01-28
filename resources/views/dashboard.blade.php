@@ -100,10 +100,12 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Add New Book</h5>
+                <h5 class="modal-title font-weight-bold" id="bookModalLabel">Add New Book</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="edit_book_id">
+                
                 <form id="bookForm">
                     <div class="form-group">
                         <label class="small font-weight-bold">Book Title</label>
@@ -119,7 +121,7 @@
             </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" onclick="saveBook()">Register Book</button>
+                <button type="button" class="btn btn-success" id="saveBookBtn" onclick="handleBookSubmit()">Register Book</button>
             </div>
         </div>
     </div>

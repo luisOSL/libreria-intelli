@@ -159,6 +159,59 @@ function handleAuthorSubmit() {
     });
 }
 
+// 1. Function to prepare the modal for editing
+function updateBook(id) {
+    $.get(`/api/books/${id}`, function (book) {
+        // Change Modal UI for Update mode
+        $('#bookModalLabel').text('Edit Book Details');
+        $('#saveBookBtn').text('Update Book').removeClass('btn-success').addClass('btn-info');
+
+        // Fill the fields
+        $('#edit_book_id').val(book.id);
+        $('#book_title').val(book.title);
+        $('#author_select').val(book.author_id); // This selects the correct author in the dropdown
+
+        // Show the modal
+        $('#bookModal').modal('show');
+    });
+}
+
+// 2. Logic to reset modal when clicking "Add New Book" button
+$('[data-target="#bookModal"]').on('click', function () {
+    $('#bookModalLabel').text('Add New Book');
+    $('#saveBookBtn').text('Register Book').removeClass('btn-info').addClass('btn-success');
+    $('#edit_book_id').val('');
+    $('#book_title').val('');
+    $('#author_select').val('');
+});
+
+// 3. Unified Submit Handler for Books
+function handleBookSubmit() {
+    const id = $('#edit_book_id').val();
+    const payload = {
+        title: $('#book_title').val(),
+        author_id: $('#author_select').val()
+    };
+
+    const isEdit = id !== "";
+    const url = isEdit ? `/api/books/${id}` : '/api/books';
+    const method = isEdit ? 'PUT' : 'POST';
+
+    $.ajax({
+        url: url,
+        type: method,
+        data: payload,
+        success: function (response) {
+            $('#bookModal').modal('hide');
+            loadBooks(); // Refresh table and count
+            loadAuthors(); // Refresh author book counts
+            alert(isEdit ? 'Book updated!' : 'Book added to library!');
+        },
+        error: function (xhr) {
+            alert('Error: ' + xhr.responseJSON.message);
+        }
+    });
+}
 if (!localStorage.getItem('jwt_token')) {
     window.location.href = '/login';
 }
