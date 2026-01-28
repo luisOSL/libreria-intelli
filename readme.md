@@ -7,7 +7,7 @@ Prueba Técnica en Laravel/JWT/API Rest/SQLite
 2. Composer 2.6.6
 3. npm version >10.0
 
-## Instalacion
+## Instalación
 
 Clonar repositorio
 
