@@ -38,7 +38,10 @@ function loadBooks() {
             rows += `<tr>
                     <td>${b.title}</td>
                     <td>${b.author ? b.author.name : 'Unknown'}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="deleteBook(${b.id})"><i class="fas fa-trash-alt mr-2"></i>Delete</button></td>
+                    <td class="text-right">
+                    <button class="btn btn-danger btn-sm" onclick="deleteBook(${b.id})"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+                    <button class="btn btn-primary btn-sm" onclick="updateBook(${b.id})"><i class="fas fa-edit mr-2"></i>Edit</button>
+                    </td>
                 </tr>`;
         });
         $('#bookTableBody').html(rows);
@@ -106,6 +109,54 @@ function deleteAuthor(id) {
             }
         });
     }
+}
+
+function updateAuthor(id) {
+    // Fetch the specific author data first
+    $.get(`/api/authors/${id}`, function (author) {
+        // Change Modal UI
+        $('#authorModalLabel').text('Edit Author');
+        $('#saveAuthorBtn').text('Update Author').removeClass('btn-primary').addClass('btn-warning');
+
+        // Fill the fields
+        $('#edit_author_id').val(author.id);
+        $('#newAuthorName').val(author.name);
+
+        // Show the modal
+        $('#authorModal').modal('show');
+    });
+}
+
+// 2. Logic to reset modal when opening for "New Author"
+$('[data-target="#authorModal"]').on('click', function () {
+    $('#authorModalLabel').text('Add New Author');
+    $('#saveAuthorBtn').text('Save Author').removeClass('btn-warning').addClass('btn-primary');
+    $('#edit_author_id').val(''); // Clear ID
+    $('#newAuthorName').val('');  // Clear Input
+});
+
+// 3. The unified Submit Handler
+function handleAuthorSubmit() {
+    const id = $('#edit_author_id').val();
+    const name = $('#newAuthorName').val();
+
+    const isEdit = id !== "";
+    const url = isEdit ? `/api/authors/${id}` : '/api/authors';
+    const method = isEdit ? 'PUT' : 'POST';
+
+    $.ajax({
+        url: url,
+        type: method,
+        data: { name: name },
+        success: function (response) {
+            $('#authorModal').modal('hide');
+            loadAuthors(); // Refresh lists and counts
+            alert(isEdit ? 'Author updated!' : 'Author created!');
+        },
+        error: function (xhr) {
+            alert('Error: ' + xhr.responseJSON.message);
+        }
+    });
 }
 
 if (!localStorage.getItem('jwt_token')) {

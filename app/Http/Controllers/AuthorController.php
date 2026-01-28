@@ -27,7 +27,13 @@ class AuthorController extends Controller
     public function update(Request $request, $id)
     {
         $author = Author::findOrFail($id);
-        $author->update($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $author->update([
+            'name' => $request->name
+        ]);
         return response()->json($author, 200);
     }
 

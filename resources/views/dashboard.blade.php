@@ -77,10 +77,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Add New Author</h5>
+                <h5 class="modal-title font-weight-bold" id="authorModalLabel">Add New Author</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="edit_author_id">
+                
                 <div class="form-group">
                     <label class="small font-weight-bold">Author Name</label>
                     <input type="text" id="newAuthorName" class="form-control" placeholder="Enter full name">
@@ -88,7 +90,7 @@
             </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="saveAuthor()">Save Author</button>
+                <button type="button" class="btn btn-primary" id="saveAuthorBtn" onclick="handleAuthorSubmit()">Save Author</button>
             </div>
         </div>
     </div>
