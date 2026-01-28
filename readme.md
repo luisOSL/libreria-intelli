@@ -20,14 +20,14 @@ cd libreria-intelli
 #copiar .env
 copy .env.example .env
 
-#instalar depedencias
+#instalar dependencias
 composer install
 
 #crear Secret de Token JWT
 php artisan jwt:secret
 ```
 
-## Creacion de base de datos sqlite
+## Creación de base de datos sqlite
 ```bash
 #Si su S.O es Windows:
 type nul > database/database.sqlite
@@ -36,7 +36,7 @@ type nul > database/database.sqlite
 touch database/database.sqlite
 ```
 
-## Migracion de Modelos
+## Migración de Modelos
 ```php
 php artisan migrate
 ```
@@ -56,7 +56,7 @@ Laravel development server started: <http://127.0.0.1:8000>
 
 ## Creación de usuario inicial:
 
-Haga click aqui para reistrar su usuario y acceder al sistema:
+Haga click para registrar su usuario y acceder al sistema:
 
 - [Link de Registro](http://localhost:8000/register)
 - [Link de Acceso](http://localhost:8000/login)
