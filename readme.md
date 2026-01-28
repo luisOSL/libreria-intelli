@@ -18,7 +18,7 @@ cd libreria-intelli
 ## Copiar .env
 ```php
 #copiar .env
-copy env.example .env
+copy .env.example .env
 
 #instalar depedencias
 composer install
