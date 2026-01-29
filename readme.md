@@ -2,7 +2,7 @@
 
 Prueba Técnica en Laravel/JWT/API Rest/SQLite
 
-## Requisitos
+## Pre-Requisitos
 1. php 7.4
 2. Composer 2.6.6
 3. npm version >10.0
