@@ -9,12 +9,24 @@ Prueba Técnica en Laravel/JWT/API Rest/SQLite
 
 ## Instalación
 
-Clonar repositorio
+## Clonar repositorio
 
 ```bash
 git clone https://github.com/luisOSL/libreria-intelli.git
 cd libreria-intelli
 ```
+
+### Opción 1: User Docker Container:
+```bash
+docker compose up -d --build
+docker exec -it libreria-mvp php artisan key:generate
+docker exec -it libreria-mvp php artisan jwt:secret
+docker exec -it libreria-mvp php artisan migrate
+```
+
+### Opción 2: User el repositorio si cumple con los pre-requisitos:
+
+
 ## Copiar .env
 ```php
 #copiar .env
